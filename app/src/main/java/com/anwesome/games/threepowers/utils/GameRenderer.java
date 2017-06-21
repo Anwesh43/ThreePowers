@@ -25,6 +25,7 @@ public class GameRenderer {
             if(time == 0) {
                 int w = canvas.getWidth(), h = canvas.getHeight();
                 gridContainer.init(w);
+                gridContainer.populateGrid();
             }
             time++;
             canvas.drawColor(Color.WHITE);

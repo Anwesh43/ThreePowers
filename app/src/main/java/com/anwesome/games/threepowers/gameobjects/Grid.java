@@ -81,11 +81,6 @@ public class Grid {
             square.move();
         }
     }
-    public void handleLeftMovement() {
-        if(square!=null) {
-
-        }
-    }
     public void setSquareTarget(Grid target) {
         if(!this.equals(target)) {
             square.setTarget(target);

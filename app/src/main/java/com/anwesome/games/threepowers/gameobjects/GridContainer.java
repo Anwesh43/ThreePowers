@@ -3,8 +3,11 @@ package com.anwesome.games.threepowers.gameobjects;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.anwesome.games.threepowers.AppConstants;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -15,6 +18,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class GridContainer {
     private ConcurrentLinkedDeque<Grid> grids = new ConcurrentLinkedDeque<>();
     private List<Grid> gridList = new ArrayList<>(),movingList = new ArrayList<>();
+    public void populateGrid() {
+        Random random = new Random();
+        int index = random.nextInt(gridList.size());
+        Grid grid = gridList.get(index);
+        if(grid.getSquare() == null) {
+            int num = random.nextInt(AppConstants.colors.length);
+            Square square = new Square(num,grid.getSize());
+            grid.setSquare(square);
+            square.setGrid(grid);
+        }
+        else {
+            populateGrid();
+        }
+    }
     public void init(int w) {
         int size = w/4,x = size/2 ,y = size/2;
         for(int i=0;i<16;i++) {
@@ -54,10 +71,15 @@ public class GridContainer {
         }
     }
     public void move() {
-        for(Grid grid:movingList) {
-            grid.move();
-            if(grid.stopped()) {
-                movingList.remove(grid);
+        if(movingList.size() > 0) {
+            for (Grid grid : movingList) {
+                grid.move();
+                if (grid.stopped()) {
+                    movingList.remove(grid);
+                }
+            }
+            if(movingList.size() == 0) {
+                populateGrid();
             }
         }
     }
