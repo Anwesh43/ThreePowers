@@ -38,4 +38,16 @@ public class GameRunner implements Runnable{
             isRunning = true;
         }
     }
+    public void handleSwipeLeft() {
+        gameRenderer.handleSwipeLeft();
+    }
+    public void handleSwipeDown() {
+        gameRenderer.handleSwipeDown();
+    }
+    public void handleSwipeUp() {
+        gameRenderer.handleSwipeUp();
+    }
+    public void handleSwipeRight() {
+        gameRenderer.handleSwipeRight();
+    }
 }

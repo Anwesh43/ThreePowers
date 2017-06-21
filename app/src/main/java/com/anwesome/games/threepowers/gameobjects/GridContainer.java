@@ -56,6 +56,9 @@ public class GridContainer {
     public void move() {
         for(Grid grid:movingList) {
             grid.move();
+            if(grid.stopped()) {
+                movingList.remove(grid);
+            }
         }
     }
     public boolean stopped() {
