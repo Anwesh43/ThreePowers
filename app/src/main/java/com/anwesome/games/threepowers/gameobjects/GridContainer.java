@@ -2,9 +2,6 @@ package com.anwesome.games.threepowers.gameobjects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
-import com.anwesome.games.threepowers.AppConstants;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -149,9 +146,59 @@ public class GridContainer {
     }
 
     public void handleSwipeDown() {
+        movingList = new ConcurrentLinkedQueue<>();
+        for(int i=0;i<4;i++) {
+           int k = 0;
+           for(int j=gridList.size()-1-i;j>=0;j-=4) {
+               Grid grid = gridList.get(i);
+               if(grid.getSquare() == null) {
+                   k++;
+               }
+               else {
+                   Grid target = grid;
+                   for(int e=0;e<k;e++) {
+                       if(target.getDownNeighbor() != null) {
+                           target = target.getDownNeighbor();
+                       }
+                   }
+                   if(target.getDownNeighbor()!=null && target.getDownNeighbor().getSquare()!=null && target.getDownNeighbor().getSquare().getNum() == grid.getSquare().getNum()) {
+                       target = target.getDownNeighbor();
+                   }
+                   grid.setSquareTarget(target);
+                   if(grid!=target) {
+                       movingList.add(grid);
+                   }
+               }
 
+           }
+       }
     }
     public void handleSwipeUp() {
+        movingList = new ConcurrentLinkedQueue<>();
+        for(int i=0;i<4;i++) {
+            int k = 0;
+            for(int j=i;j>=0;j+=4) {
+                Grid grid = gridList.get(i);
+                if(grid.getSquare() == null) {
+                    k++;
+                }
+                else {
+                    Grid target = grid;
+                    for(int e=0;e<k;e++) {
+                        if(target.getUpNeighbor() != null) {
+                            target = target.getUpNeighbor();
+                        }
+                    }
+                    if(target.getUpNeighbor()!=null && target.getUpNeighbor().getSquare()!=null && target.getUpNeighbor().getSquare().getNum() == grid.getSquare().getNum()) {
+                        target = target.getUpNeighbor();
+                    }
+                    grid.setSquareTarget(target);
+                    if(grid!=target) {
+                        movingList.add(grid);
+                    }
+                }
 
+            }
+        }
     }
 }
