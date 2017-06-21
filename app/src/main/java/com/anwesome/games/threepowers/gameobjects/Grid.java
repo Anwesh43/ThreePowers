@@ -18,6 +18,9 @@ public class Grid {
         this.x = x;
         this.y = y;
     }
+    public float getSize() {
+        return size;
+    }
     public void setSquare(Square square) {
         this.square = square;
     }
@@ -78,35 +81,15 @@ public class Grid {
             square.move();
         }
     }
-    public boolean startMoving(float lx,float ly) {
-        Grid neighbor = null;
-        if(lx > 0){
-            neighbor = getRightNeighbor();
-        }
-        if(lx<0) {
-            neighbor = getLeftNeighbor();
-        }
-        if(ly>0) {
-            neighbor = getDownNeighbor();
-        }
-        if(ly<0) {
-            neighbor = getUpNeighbor();
-        }
-        if(neighbor != null) {
-            Square square = neighbor.getSquare();
-            if(square == null) {
-                this.square.setSpeeds(lx,ly);
-                return true;
-            }
-            else {
-                if(square.getNum() == this.square.getNum()) {
-                    this.square.setSpeeds(lx,ly);
-                    return true;
-                }
+    public void handleLeftMovement() {
+        if(square!=null) {
 
-            }
         }
-        return false;
+    }
+    public void setSquareTarget(Grid target) {
+        if(!this.equals(target)) {
+            square.setTarget(target);
+        }
     }
     public void draw(Canvas canvas, Paint paint) {
         if(square != null) {

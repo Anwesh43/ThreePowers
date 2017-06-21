@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.pdf.PdfDocument;
-
 import com.anwesome.games.threepowers.AppConstants;
 
 /**
@@ -16,7 +14,7 @@ import com.anwesome.games.threepowers.AppConstants;
 public class Square {
     private int num = 0,animCounter = 0;
     private float x,y,lx,ly,size;
-    private Grid grid;
+    private Grid grid,target;
     public Square(int num,float size) {
         this.num = num;
         this.size = size;
@@ -24,9 +22,10 @@ public class Square {
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
-    public void setSpeeds(float lx,float ly) {
-        this.lx = lx;
-        this.ly = ly;
+    public void setTarget(Grid target) {
+        this.lx = (target.getX()-x)/3;
+        this.ly = (target.getY()-y)/3;
+        this.target = target;
     }
     public void setXY(float x,float y) {
         this.x = x;
@@ -57,38 +56,31 @@ public class Square {
         canvas.restore();
     }
     public void move() {
-        x+=(lx*size/3);
-        y+=(ly*size/3);
-        animCounter++;
-        if(animCounter == 3) {
-            if (this.grid != null) {
-                Grid neighbor = null;
-                if (lx > 0) {
-                    neighbor = grid.getRightNeighbor();
-                }
-                if (lx < 0) {
-                    neighbor = grid.getLeftNeighbor();
-                }
-                if (ly < 0) {
-                    neighbor = grid.getUpNeighbor();
-                }
-                if (ly > 0) {
-                    neighbor = grid.getDownNeighbor();
-                }
-                if (neighbor != null) {
-                    if (neighbor.getSquare() == null) {
-                        grid.setSquare(null);
-                        neighbor.setSquare(this);
-                        grid = neighbor;
-                    } else {
-                        if (neighbor.getSquare() != null && neighbor.getSquare().getNum() == num) {
-                            Square square = new Square(num + 1, size);
+        if(lx != 0 || ly!=0 || target != null) {
+            x += lx;
+            y += ly;
+            animCounter++;
+            if (animCounter == 3) {
+                if (this.grid != null) {
+                    if (target != null) {
+                        if (target.getSquare() == null) {
                             grid.setSquare(null);
-                            square.setGrid(neighbor);
-                            neighbor.setSquare(square);
+                            target.setSquare(this);
+                            grid = target;
+                            lx = 0;
+                            ly = 0;
+                        } else {
+                            if (target.getSquare() != null && target.getSquare().getNum() == num) {
+                                Square square = new Square(num + 1, size);
+                                grid.setSquare(null);
+                                square.setGrid(target);
+                                target.setSquare(square);
+                                lx = 0;
+                                ly = 0;
+                            }
                         }
-                    }
 
+                    }
                 }
             }
         }
