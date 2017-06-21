@@ -24,7 +24,7 @@ public class GridContainer {
         int index = random.nextInt(gridList.size());
         Grid grid = gridList.get(index);
         if(grid.getSquare() == null) {
-            int num = random.nextInt(AppConstants.colors.length);
+            int num = random.nextInt(2);
             Square square = new Square(num,grid.getSize());
             square.setXY(grid.getX(),grid.getY());
             grid.setSquare(square);
@@ -137,7 +137,7 @@ public class GridContainer {
                         target = target.getRightNeighbor();
                     }
                 }
-                if(target.getRightNeighbor()!=null && target.getRightNeighbor().getSquare()!=null && target.getRightNeighbor().getSquare().getNum() == grid.getRightNeighbor().getSquare().getNum()) {
+                if(target.getRightNeighbor()!=null && target.getRightNeighbor().getSquare()!=null && target.getRightNeighbor().getSquare().getNum() == grid.getSquare().getNum()) {
                     target = target.getRightNeighbor();
                 }
                 grid.setSquareTarget(target);

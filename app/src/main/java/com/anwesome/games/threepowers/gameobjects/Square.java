@@ -69,14 +69,17 @@ public class Square {
                             grid = target;
                             lx = 0;
                             ly = 0;
+                            animCounter = 0;
                         } else {
                             if (target.getSquare() != null && target.getSquare().getNum() == num) {
                                 Square square = new Square(num + 1, size);
+                                square.setXY(target.getX(),target.getY());
                                 grid.setSquare(null);
                                 square.setGrid(target);
                                 target.setSquare(square);
                                 lx = 0;
                                 ly = 0;
+                                animCounter = 0;
                             }
                         }
 
