@@ -50,9 +50,9 @@ public class Square {
         canvas.drawRect(new RectF(-size/3,-size/3,size/3,size/3),paint);
         paint.setColor(Color.WHITE);
         paint.setTextSize(size/4);
-        String text = ""+Math.pow(3,num+1);
+        String text = ""+(int)Math.pow(3,num+1);
         float tw = paint.measureText(text)/2;
-        canvas.drawText(text,-tw,-tw/2,paint);
+        canvas.drawText(text,-tw,0,paint);
         canvas.restore();
     }
     public void move() {
