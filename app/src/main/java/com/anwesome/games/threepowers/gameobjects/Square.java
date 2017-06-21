@@ -41,6 +41,9 @@ public class Square {
     public int hashCode() {
         return num;
     }
+    public boolean stopped() {
+        return lx == 0 && ly == 0;
+    }
     public void draw(Canvas canvas,Paint paint) {
         paint.setColor(AppConstants.colors[num]);
         canvas.save();

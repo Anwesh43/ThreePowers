@@ -73,7 +73,41 @@ public class Grid {
     public void setDownNeighbor(Grid downNeighbor) {
         this.downNeighbor = downNeighbor;
     }
+    public void move() {
+        if(square != null) {
+            square.move();
+        }
+    }
+    public boolean startMoving(float lx,float ly) {
+        Grid neighbor = null;
+        if(lx > 0){
+            neighbor = getRightNeighbor();
+        }
+        if(lx<0) {
+            neighbor = getLeftNeighbor();
+        }
+        if(ly>0) {
+            neighbor = getDownNeighbor();
+        }
+        if(ly<0) {
+            neighbor = getUpNeighbor();
+        }
+        if(neighbor != null) {
+            Square square = neighbor.getSquare();
+            if(square == null) {
+                this.square.setSpeeds(lx,ly);
+                return true;
+            }
+            else {
+                if(square.getNum() == this.square.getNum()) {
+                    this.square.setSpeeds(lx,ly);
+                    return true;
+                }
 
+            }
+        }
+        return false;
+    }
     public void draw(Canvas canvas, Paint paint) {
         if(square != null) {
             square.draw(canvas,paint);
@@ -85,5 +119,11 @@ public class Grid {
             canvas.drawRect(new RectF(-size/3,-size/3,size/3,size/3),paint);
             canvas.restore();
         }
+    }
+    public int hashCode() {
+        return (int)(x+y);
+    }
+    public boolean stopped() {
+        return (square == null) || (square!=null && square.stopped());
     }
 }
