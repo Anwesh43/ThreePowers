@@ -150,7 +150,7 @@ public class GridContainer {
         for(int i=0;i<4;i++) {
            int k = 0;
            for(int j=gridList.size()-1-i;j>=0;j-=4) {
-               Grid grid = gridList.get(i);
+               Grid grid = gridList.get(j);
                if(grid.getSquare() == null) {
                    k++;
                }
@@ -177,8 +177,8 @@ public class GridContainer {
         movingList = new ConcurrentLinkedQueue<>();
         for(int i=0;i<4;i++) {
             int k = 0;
-            for(int j=i;j>=0;j+=4) {
-                Grid grid = gridList.get(i);
+            for(int j=i;j<gridList.size();j+=4) {
+                Grid grid = gridList.get(j);
                 if(grid.getSquare() == null) {
                     k++;
                 }
